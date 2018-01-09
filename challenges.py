@@ -47,12 +47,19 @@ def displayData():
       for rec in found_recipes.json()['results']:
         return_string += (rec['title'] + "<br>")
       return '<h1>The recipes for that ingredient are as follows:</h1><br><p>{}</p>'.format(return_string)
+    else:
+      pass
 
 ## Task 4
 ## Note : Since this is a dyanmic URL, recipes function should recieve a paramter called `ingrdient` 
 @app.route('/recipe/<ingredient>')
-def recipes():
-    pass
+def recipes(ingredient):
+    puppy_string = 'http://www.recipepuppy.com/api/?i='
+    return_string = ''
+    found_recipes = requests.get(puppy_string + ingredient)
+    for rec in found_recipes.json()['results']:
+      return_string += (rec['title'] + "<br>")
+    return '<h1>The recipes for that ingredient are as follows:</h1><br><p>{}</p>'.format(return_string)
 
 if __name__ == '__main__':
     app.run()
